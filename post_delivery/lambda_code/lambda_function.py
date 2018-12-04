@@ -28,37 +28,27 @@ people_json = {
     {
       "ID":102,
     	"name":"Danny",
-    	"locations":["Lessin Tel Aviv-Yafo",
-    	             "HaTamar Tel Aviv-Yafo",
-    	             "Harimon Tel Aviv-Yafo"]
+    	"locations":["Menachem Begin 23 Tel Aviv"]
     },
     {
       "ID":103,
     	"name":"Daniel",
-    	"locations":["Bezalel  Tel Aviv-Yafo",
-    	             "Ahaliav  Tel Aviv-Yafo",
-    	             "Moshe Sharet  Tel Aviv-Yafo"]
+    	"locations":["Menachem Begin 23 Tel Aviv"]
     },
     {
       "ID":107,
     	"name":"Noam",
-    	"locations":["Sarona Market Tel Aviv-Yafo",
-    	             "Ben Avigdor Tel Aviv-Yafo",
-    	             "Meitav  Tel Aviv-Yafo"]
+    	"locations":["Menachem Begin 23 Tel Aviv"]
     },
     {
       "ID":108,
     	"name":"Adam",
-    	"locations":["HaAvoda Tel Aviv-Yafo",
-    	             "Sheinkin Tel Aviv-Yafo",
-    	             "Brenner Tel Aviv-Yafo"]
+    	"locations":["Begin 23 Jerusalem"]
     },
     {
       "ID":110,
     	"name":"Jonathan",
-    	"locations":["Ben Ami Tel Aviv-Yafo",
-    	             "HaAri Tel Aviv-Yafo",
-    	             "Najara Tel Aviv-Yafo"]
+    	"locations":["Begin 23 Jerusalem"]
     }]
 }
 
@@ -79,7 +69,7 @@ def lambda_handler(event, context):
     directions_result = gmaps.directions(origin,
                                          dest,
                                          mode="transit",
-                                         departure_time=datetime.now(),
+                                         departure_time=1544003400,
                                          transit_mode='bus',
                                          alternatives=True)
 
@@ -122,11 +112,25 @@ def lambda_handler(event, context):
                 if loc:
                     lot = loc[0]['geometry']['location']['lat']
                     lan = loc[0]['geometry']['location']['lng']
-                    if get_km_distance(lat1, lon1, lot, lan) < 1:
+                    if get_km_distance(lat1, lon1, lot, lan) < 10:
                         relevant_people.append(person['ID'])
                         break
         result_dict[key] = relevant_people
 
     print(result_dict)
+    send_sms.SMS().send_sms('Use line 238 or 63 to deliver and earn some money!'.format())
+    print(directions_result[2]['legs'][0]['steps'])
+
+    # with open('your_file.txt', 'w') as f:
+    #     for item in directions_result[2]['legs'][0]['steps']:
+    #         f.write("%s\n" % item)
     SMS().send_sms('Use line 238 or 63 to deliver and earn some money!\nClick here to accept: https://tinyurl.com/ybbcuvxs')
     return response(result_dict)
+
+
+    return response(directions_result[2]['legs'][0]['steps'])
+
+
+
+# event = {'origin': 'Menachem Begin 23 tel aviv', 'destination': 'Ben Gurion university', 'customer_id': 100}
+# lambda_handler(event, 1)
