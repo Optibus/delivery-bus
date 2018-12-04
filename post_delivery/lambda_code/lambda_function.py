@@ -4,7 +4,10 @@ from datetime import datetime
 from math import sin, cos, sqrt, atan2, radians
 from geopy.distance import geodesic
 
+
 import json
+
+from post_delivery.lambda_code import send_sms
 
 print('Loading function')
 
@@ -23,20 +26,6 @@ people_json = [{'id': '0526216383', 'stop': {'lat': '1.111', 'lon': '1.2323'}}]
 people_json = {
   "deliverbizers": [
     {
-    	"ID":100,
-    	"name":"Joseph",
-    	"locations":["Clay Tel Aviv-Yafo",
-    	             "Helsinki Tel Aviv-Yafo",
-    	             "Yoo Towers Tel Aviv-Yafo"]
-    },
-    {
-      "ID":101,
-    	"name":"David",
-    	"locations":["Tashi Tel Aviv-Yafo",
-    	             "Tuval  Tel Aviv-Yafo",
-    	             "Brurya Tel Aviv-Yafo"]
-    },
-    {
       "ID":102,
     	"name":"Danny",
     	"locations":["Lessin Tel Aviv-Yafo",
@@ -51,27 +40,6 @@ people_json = {
     	             "Moshe Sharet  Tel Aviv-Yafo"]
     },
     {
-      "ID":104,
-    	"name":"Lavie",
-    	"locations":["Ram Tel Aviv-Yafo",
-    	             "Sderot Yehudit Tel Aviv-Yafo",
-    	             "Yosef Karo Ram Tel Aviv-Yafo"]
-    },
-    {
-      "ID":105,
-    	"name":"Omer",
-    	"locations":["Eliezer Kaplan Tel Aviv-Yafo",
-    	             "Heftman Tel Aviv-Yafo",
-    	             "Beit Hilel Tel Aviv-Yafo"]
-    },
-    {
-      "ID":106,
-    	"name":"Ariel",
-    	"locations":["Shulman Tel Aviv-Yafo",
-    	             "Yinon Tel Aviv-Yafo",
-    	             "Yaniv Tel Aviv-Yafo"]
-    },
-    {
       "ID":107,
     	"name":"Noam",
     	"locations":["Sarona Market Tel Aviv-Yafo",
@@ -84,13 +52,6 @@ people_json = {
     	"locations":["HaAvoda Tel Aviv-Yafo",
     	             "Sheinkin Tel Aviv-Yafo",
     	             "Brenner Tel Aviv-Yafo"]
-    },
-    {
-      "ID":109,
-    	"name":"Itai",
-    	"locations":["Gordon Tel Aviv-Yafo",
-    	             "Frishman Tel Aviv-Yafo",
-    	             "Sderot Ben Gurion Tel Aviv-Yafo"]
     },
     {
       "ID":110,
@@ -152,8 +113,6 @@ def lambda_handler(event, context):
         relevant_people = []
         lat1 = value['departure_stop']['lat']
         lon1 = value['departure_stop']['lng']
-        lat2 = value['arrival_stop']['lat']
-        lon2 = value['arrival_stop']['lng']
         for person in people_json['deliverbizers']:
             person['google_locations'] = []
             for x in person['locations']:
@@ -168,7 +127,11 @@ def lambda_handler(event, context):
                         break
         result_dict[key] = relevant_people
 
+    print(result_dict)
+    send_sms.SMS().send_sms('Use line 238 or 63 to deliver and earn some money!'.format())
     return response(result_dict)
 
 
 
+event = {'origin': 'HaYarkon 20 tel aviv', 'destination': 'komoi 6 haifa', 'customer_id': 100}
+lambda_handler(event, 1)
