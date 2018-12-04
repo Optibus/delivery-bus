@@ -130,7 +130,7 @@ def lambda_handler(event, context):
                         'departure_time': bus['transit_details']['departure_time']['text'],
                         'duration': bus['duration']['text']})
 
-    SMS().send_sms('Use line 238 or 63 to deliver and earn some money!\nClick here to accept: https://tinyurl.com/ybbcuvxs')
+    SMS().send_sms('Use line 238 or 669 to deliver and earn some money!\nClick here to accept: https://tinyurl.com/ybbcuvxs')
 
 
     return response(res)
