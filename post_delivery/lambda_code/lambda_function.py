@@ -120,11 +120,19 @@ def lambda_handler(event, context):
 
     print(result_dict)
     print(directions_result[2]['legs'][0]['steps'])
+    res = []
+    for bus in directions_result[2]['legs'][0]['steps']:
+        if bus['distance']['value'] < 1000:
+            continue
+        else:
+            res.append({'name_of_the_stop': bus['transit_details']['departure_stop']['name'],
+                        'line_number': bus['transit_details']['line']['short_name'],
+                        'departure_time': bus['transit_details']['departure_time']['text'],
+                        'duration': bus['duration']['text']})
 
-    # with open('your_file.txt', 'w') as f:
-    #     for item in directions_result[2]['legs'][0]['steps']:
-    #         f.write("%s\n" % item)
     SMS().send_sms('Use line 238 or 63 to deliver and earn some money!\nClick here to accept: https://tinyurl.com/ybbcuvxs')
 
 
-    return response(directions_result[2]['legs'][0]['steps'])
+    return response(res)
+
+lambda_handler([], [])
