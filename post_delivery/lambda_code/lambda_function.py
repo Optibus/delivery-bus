@@ -118,15 +118,7 @@ def lambda_handler(event, context):
         result_dict[key] = relevant_people
 
     print(result_dict)
-    send_sms.SMS().send_sms('Use line 238 or 63 to deliver and earn some money!'.format())
-    print(directions_result[2]['legs'][0]['steps'])
-
-    # with open('your_file.txt', 'w') as f:
-    #     for item in directions_result[2]['legs'][0]['steps']:
-    #         f.write("%s\n" % item)
     SMS().send_sms('Use line 238 or 63 to deliver and earn some money!\nClick here to accept: https://tinyurl.com/ybbcuvxs')
-    return response(result_dict)
-
 
     return response(directions_result[2]['legs'][0]['steps'])
 
