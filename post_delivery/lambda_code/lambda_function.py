@@ -130,8 +130,3 @@ def lambda_handler(event, context):
     print(result_dict)
     send_sms.SMS().send_sms('Use line 238 or 63 to deliver and earn some money!'.format())
     return response(result_dict)
-
-
-
-event = {'origin': 'HaYarkon 20 tel aviv', 'destination': 'komoi 6 haifa', 'customer_id': 100}
-lambda_handler(event, 1)
