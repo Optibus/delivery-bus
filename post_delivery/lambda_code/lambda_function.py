@@ -7,7 +7,7 @@ from geopy.distance import geodesic
 
 import json
 
-from post_delivery.lambda_code import send_sms
+from send_sms import SMS
 
 print('Loading function')
 
@@ -128,5 +128,5 @@ def lambda_handler(event, context):
         result_dict[key] = relevant_people
 
     print(result_dict)
-    send_sms.SMS().send_sms('Use line 238 or 63 to deliver and earn some money!'.format())
+    SMS().send_sms('Use line 238 or 63 to deliver and earn some money!'.format())
     return response(result_dict)
