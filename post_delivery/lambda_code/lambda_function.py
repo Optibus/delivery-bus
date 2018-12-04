@@ -111,13 +111,12 @@ def lambda_handler(event, context):
     # print("Received event: " + json.dumps(event, indent=2))
 
     gmaps = googlemaps.Client(key='AIzaSyA1vDfDUOgFDMrgpJYTT_y6LfhCq79fsfE')
-
-    # origin = event.get('origin')
-    # dest = event.get('destination')
-    # customer_id = event.get('customer_id')
+    origin = event.get('origin')
+    dest = event.get('destination')
+    customer_id = event.get('customer_id')
     buses = []
-    directions_result = gmaps.directions("הירקון 20, תל אביב יפו",
-                                         "נתן קומוי 6, חיפה",
+    directions_result = gmaps.directions(origin,
+                                         dest,
                                          mode="transit",
                                          departure_time=datetime.now(),
                                          transit_mode='bus',
@@ -169,11 +168,7 @@ def lambda_handler(event, context):
                         break
         result_dict[key] = relevant_people
 
+    return response(result_dict)
 
 
-
-
-    print(result_dict)
-
-lambda_handler(None, None)
 
