@@ -1,1 +1,3 @@
 boto==2.48.0
+googlemaps==3.0.2
+geopy==1.18.0
