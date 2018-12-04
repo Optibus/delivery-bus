@@ -60,6 +60,7 @@ def get_km_distance(lat1, lon1, lat2, lon2):
 
 def lambda_handler(event, context):
     # print("Received event: " + json.dumps(event, indent=2))
+    event = {'origin': 'Menachem Begin 23 tel aviv', 'destination': 'Ben Gurion university', 'customer_id': 100}
 
     gmaps = googlemaps.Client(key='AIzaSyA1vDfDUOgFDMrgpJYTT_y6LfhCq79fsfE')
     origin = event.get('origin')
@@ -118,11 +119,12 @@ def lambda_handler(event, context):
         result_dict[key] = relevant_people
 
     print(result_dict)
+    print(directions_result[2]['legs'][0]['steps'])
+
+    # with open('your_file.txt', 'w') as f:
+    #     for item in directions_result[2]['legs'][0]['steps']:
+    #         f.write("%s\n" % item)
     SMS().send_sms('Use line 238 or 63 to deliver and earn some money!\nClick here to accept: https://tinyurl.com/ybbcuvxs')
 
+
     return response(directions_result[2]['legs'][0]['steps'])
-
-
-
-# event = {'origin': 'Menachem Begin 23 tel aviv', 'destination': 'Ben Gurion university', 'customer_id': 100}
-# lambda_handler(event, 1)
