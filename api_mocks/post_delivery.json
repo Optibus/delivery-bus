@@ -1,0 +1,17 @@
+{
+  "customer_id": "",
+  "origin": "",
+  "destination": ""
+}
+
+------------------------------------------
+{
+  "route": {
+    "price": 100,
+    "customer_ids": [{
+      "id": "1234",
+      "name": "Eran"
+    }],
+    google object
+  }
+}
