@@ -128,5 +128,5 @@ def lambda_handler(event, context):
         result_dict[key] = relevant_people
 
     print(result_dict)
-    SMS().send_sms('Use line 238 or 63 to deliver and earn some money!'.format())
+    SMS().send_sms('Use line 238 or 63 to deliver and earn some money!\nClick here to accept: https://tinyurl.com/ybbcuvxs')
     return response(result_dict)
